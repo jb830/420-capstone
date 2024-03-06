@@ -9,26 +9,6 @@
 db.teams.drop()
 db.players.drop()
 
-// Create players collections using Document Validation.
-db.createCollection("players", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      properties: {
-        firstName: {
-          bsonType: "string"
-        },
-        lastName: {
-          bsonType: "string"
-        },
-        salary: {
-          bsonType: "int"
-        }
-      }
-    }
-  }
-});
-
 // Create teams collections using Document Validation.
 db.createCollection("teams", {
   validator: {
@@ -46,6 +26,9 @@ db.createCollection("teams", {
           items: {
             bsonType: "object",
             properties: {
+              _id: {
+                bsonType: "objectId"
+              },
               firstName: {
                 bsonType: "string"
               },
@@ -372,29 +355,32 @@ seattle = {
   ]
 }
 
-db.teams.insertOne(la);
-db.teams.insertOne(nyFc);
-db.teams.insertOne(toronto);
-db.teams.insertOne(atlanta);
-db.teams.insertOne(seattle);
-
-
+//populate la, create ObjectIds for each player
 la.players.forEach(player => {
-  db.players.insertOne(player);
+  player._id = new ObjectId();
 });
+db.teams.insertOne(la);
 
+//populate nyFa, create ObjectIds for each player
 nyFc.players.forEach(player => {
-  db.players.insertOne(player);
+  player._id = new ObjectId();
 });
+db.teams.insertOne(nyFc);
 
+//populate toronto, create ObjectIds for each player
 toronto.players.forEach(player => {
-  db.players.insertOne(player);
+  player._id = new ObjectId();
 });
+db.teams.insertOne(toronto);
 
+//populate atlanta, create ObjectIds for each player
 atlanta.players.forEach(player => {
-  db.players.insertOne(player);
+  player._id = new ObjectId();
 });
+db.teams.insertOne(atlanta);
 
+//populate seattle, create ObjectIds for each player
 seattle.players.forEach(player => {
-  db.players.insertOne(player);
+  player._id = new ObjectId();
 });
+db.teams.insertOne(seattle);

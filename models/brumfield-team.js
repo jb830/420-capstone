@@ -8,7 +8,7 @@
 ;===========================================
 */
 
- //mongoose
+//mongoose
 const mongoose = require('mongoose');
 
 //mongoose.Schema object. 
@@ -16,6 +16,10 @@ const Schema = mongoose.Schema;
 
 //player schema
 const playerSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true
+  },
   firstName: {
     type: String,
     required: true
@@ -40,7 +44,7 @@ const teamSchema = new Schema({
     type: String,
     required: true
   },
-  players: [playerSchema], 
+  players: [playerSchema],
 }, {
   collection: 'teams'
 });

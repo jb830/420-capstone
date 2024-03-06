@@ -1,0 +1,113 @@
+
+# ============================================
+# ; Title:  brumfield-teams.yaml
+# ; Author: Professor Krasso
+# ; Date: 28, January, 2024
+# ; Modified by: Joanna Brumfield
+# ; Description: Teams openapi description
+# ;===========================================
+
+openapi: 3.0.0
+info:
+  title: Teams API
+  description: API for managing teams and players documents from MongoDB
+  version: "1.0.0"
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /teams:
+    get:
+      tags:
+        - Teams
+      summary: return list of team documents
+      description: API for returning a list of teams documents from MongoDB
+      responses:
+        '200':
+          description: Array of team names
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+  
+  /teams/{id}/players:
+    post:
+      tags:
+        - Teams
+      summary: Add a new player to a team
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Team document id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstName
+                - lastName
+                - salary
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                salary:
+                  type: number
+      responses:
+        '200':
+          description: Player document
+        '404':
+          description: Invalid teamId
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+    get:
+      tags:
+        - Teams
+      summary: returns array of player documents
+      description: Returns list of players by team Id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Team document id
+          schema:
+            type: string
+            example: "65e74cfdd67125f6590c307e"
+      responses:
+        '200':
+          description: Array of player documents
+        '404':
+          description: Invalid teamId
+        '500':
+          description: Server exception
+        '501':
+          description: MongoDB Exception
+  /api/teams/{id}:
+    delete:
+      tags:
+        - Teams
+      summary: deletes a team document
+      description: Deletes team by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Team document id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Team document
+        '404':
+          description: Invalid teamId
+        '500':
+          description: Server exception
+        '501':
+          description: MongoDB Exception

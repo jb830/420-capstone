@@ -127,55 +127,55 @@ router.post('/:id/players', async (req, res) => {
 });
 
 
-/**
- ** findTeamByTeamId
- * @openapi
- * /api/teams/{id}:
- *   get:
- *     tags:
- *       - Teams
- *     description: Returns team by Id
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: Team document id
- *         schema:
- *           type: string
- *           example: "65e89db51f268d6cbbf46487"
- *     responses:
- *       '200':
- *         description: team documents
- *       '404':
- *          description: Invalid teamId
- *       '500':
- *         description: Server exception
- *       '501':
- *         description: MongoDB Exception
- */
-router.get('/:id', async (req, res) => {
-  try {
-    const team = await Team.findById(req.params.id).exec();
-    if (!team) {
-      res.status(404).send({
-        'message': 'Invalid teamId'
-      });
-    } else {
-      console.log(team);
-      res.json(team);
-    }
-  } catch (e) {
-    if (e) {
-      res.status(501).send({
-        'message': `MongoDB Exception: ${e.message}`
-      });
-    } else {
-      res.status(500).send({
-        'message': `Server Exception: ${e.message}`
-      });
-    }
-  }
-});
+// /**
+//  ** findTeamByTeamId
+//  * @openapi
+//  * /api/teams/{id}:
+//  *   get:
+//  *     tags:
+//  *       - Teams
+//  *     description: Returns team by Id
+//  *     parameters:
+//  *       - name: id
+//  *         in: path
+//  *         required: true
+//  *         description: Team document id
+//  *         schema:
+//  *           type: string
+//  *           example: "65e89db51f268d6cbbf46487"
+//  *     responses:
+//  *       '200':
+//  *         description: team documents
+//  *       '404':
+//  *          description: Invalid teamId
+//  *       '500':
+//  *         description: Server exception
+//  *       '501':
+//  *         description: MongoDB Exception
+//  */
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const team = await Team.findById(req.params.id).exec();
+//     if (!team) {
+//       res.status(404).send({
+//         'message': 'Invalid teamId'
+//       });
+//     } else {
+//       console.log(team);
+//       res.json(team);
+//     }
+//   } catch (e) {
+//     if (e) {
+//       res.status(501).send({
+//         'message': `MongoDB Exception: ${e.message}`
+//       });
+//     } else {
+//       res.status(500).send({
+//         'message': `Server Exception: ${e.message}`
+//       });
+//     }
+//   }
+// });
 
 /**
  ** findAllPlayersByTeamId
@@ -279,64 +279,64 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-/**
- *  * deletePlayerById
- * @openapi
- * /api/teams/{teamId}/players/{playerId}:
- *   delete:
- *     tags:
- *       - Teams
- *     description: Deletes player by id
- *     summary: deletes a player document
- *     parameters:
- *       - name: teamId
- *         in: path
- *         required: true
- *         description: Team document id
- *         schema:
- *           type: string
- *       - name: playerId
- *         in: path
- *         required: true
- *         description: Player document id
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Player document
- *       '404':
- *         description: Invalid Team or playerId
- *       '500':
- *         description: Server exception
- *       '501':
- *         description: MongoDB Exception
- */
-router.delete('/:teamId/players/:playerId', async (req, res) => {
-  try {
-    const teamId = req.params
-    const playerId = req.params;
+// /**
+//  *  * deletePlayerById
+//  * @openapi
+//  * /api/teams/{teamId}/players/{playerId}:
+//  *   delete:
+//  *     tags:
+//  *       - Teams
+//  *     description: Deletes player by id
+//  *     summary: deletes a player document
+//  *     parameters:
+//  *       - name: teamId
+//  *         in: path
+//  *         required: true
+//  *         description: Team document id
+//  *         schema:
+//  *           type: string
+//  *       - name: playerId
+//  *         in: path
+//  *         required: true
+//  *         description: Player document id
+//  *         schema:
+//  *           type: string
+//  *     responses:
+//  *       '200':
+//  *         description: Player document
+//  *       '404':
+//  *         description: Invalid Team or playerId
+//  *       '500':
+//  *         description: Server exception
+//  *       '501':
+//  *         description: MongoDB Exception
+//  */
+// router.delete('/:teamId/players/:playerId', async (req, res) => {
+//   try {
+//     const teamId = req.params
+//     const playerId = req.params;
 
-    const team = await Team.findByIdAndUpdate(teamId, {
-      $pull: {
-        players: {
-          _id: playerId
-        }
-      }
-    });
-    if (!team) {
-      res.status(404).send({
-        'message': 'Invalid Team or playerId'
-      })
-    } else {
-      console.log("Player deleted")
-      res.status(200).json(playerId);
-    }
+//     const team = await Team.findByIdAndUpdate(teamId, {
+//       $pull: {
+//         players: {
+//           _id: playerId
+//         }
+//       }
+//     });
+//     if (!team) {
+//       res.status(404).send({
+//         'message': 'Invalid Team or playerId'
+//       })
+//     } else {
+//       console.log("Player deleted")
+//       res.status(200).json(playerId);
+//     }
 
-  } catch (e) {
-    res.status(501).send({
-      'message': `MongoDB Exception: ${e.message}`
-    });
-  }
-});
+//   } catch (e) {
+//     res.status(501).send({
+//       'message': `MongoDB Exception: ${e.message}`
+//     });
+//   }
+// });
 
 module.exports = router;
